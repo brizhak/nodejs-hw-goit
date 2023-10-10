@@ -1,5 +1,14 @@
-const app = require('./app')
+import mongoose from "mongoose";
+import app from "./app.js";
 
-app.listen(3000, () => {
-  console.log("Server running. Use our API on port: 3000")
-})
+mongoose
+  .connect(process.env.DB_HOST)
+  .then(() => {
+    app.listen(3000, () => {
+      console.log("Database connection successful");
+    });
+  })
+  .catch((e) => {
+    console.log(e.message);
+    process.exit(1);
+  });
