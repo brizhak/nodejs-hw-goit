@@ -1,10 +1,12 @@
 import HttpError from "../helpers/httpError.js";
 
 const validateBody = (schema) => {
-  const func = (req, res, next) => {
+  const func = (req, _, next) => {
     const { error } = schema.validate(req.body);
     if (error) {
-      return next(HttpError(400, error.message));
+      return next(
+        HttpError(400, "Error from Joi or another validation library")
+      );
     }
     next();
   };
